@@ -939,6 +939,33 @@
 
       loadProducts();
       renderStorefront();
+      document.getElementById('product-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  const id = document.getElementById('edit-id').value;
+  const productData = {
+    name: document.getElementById('p-name').value.trim(),
+    category: document.getElementById('p-category').value,
+    price: Number(document.getElementById('p-price').value),
+    image: document.getElementById('p-image').value.trim(),
+    desc: document.getElementById('p-desc').value.trim()
+  };
+  if (!productData.name || !productData.price) {
+    alert('Please complete all required fields.');
+    return;
+  }
+  if (id) {
+    const index = products.findIndex(item => item.id === id);
+    if (index !== -1) products[index] = { ...products[index], ...productData };
+  } else {
+    products.push({ id: generateId(), ...productData });
+  }
+  saveProducts();
+  document.getElementById('product-form').reset();
+  document.getElementById('edit-id').value = '';
+  renderAdminInventory();
+  renderStorefront();
+});
+
     </script>
   </body>
 </html>
