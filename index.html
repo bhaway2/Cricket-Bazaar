@@ -117,12 +117,6 @@
         font-size: 1.1rem;
       }
 
-      .soft-button {
-        background: #ebf7f2;
-        color: var(--green-dark);
-        border: 1px solid rgba(15, 157, 116, 0.2);
-      }
-
       .hero-btn-primary {
         background: linear-gradient(180deg, #18b58a 0%, #0d8c69 100%);
         color: white;
@@ -166,11 +160,6 @@
         box-shadow: 0 0 0 4px rgba(15, 157, 116, 0.09);
       }
 
-      .stats-box {
-        background: linear-gradient(135deg, #f6fbf8 0%, #eef6ff 100%);
-        border: 1px solid #dfeaf3;
-      }
-
       .line-clamp-3 {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -206,7 +195,7 @@
           </div>
 
           <div class="hidden md:flex items-center gap-8 text-sm font-semibold">
-            <button onclick="switchView('store')" id="nav-store" class="text-emerald-600 transition flex items-center gap-2">
+            <button onclick="switchView('store')" id="nav-store" class="text-emerald-600 font-bold transition flex items-center gap-2">
               <i class="fa-solid fa-store"></i> Store Catalog
             </button>
             <button onclick="switchView('news')" id="nav-news" class="text-slate-600 hover:text-slate-900 transition flex items-center gap-2">
@@ -232,9 +221,7 @@
             <div class="relative z-10 p-8 md:p-12 max-w-2xl space-y-5">
               <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 bg-white/10 text-white text-xs font-semibold tracking-wide backdrop-blur-sm">
                 <i class="fa-solid fa-award text-amber-300"></i>
-                red lether cricket ball
-                High-quality red leather cricket ball, durable and perfect for match play.
-                
+                Official Match-Grade Equipment
               </span>
 
               <h2 class="font-serif text-4xl md:text-6xl font-extrabold text-white leading-tight">
@@ -394,7 +381,7 @@
                   <i class="fa-solid fa-plus mr-2"></i> Add Product
                 </button>
                 <button type="button" onclick="generateAIHistory()" class="px-6 py-3 bg-gold-500 hover:bg-gold-600 text-slate-900 font-bold rounded-xl shadow-lg transition flex items-center gap-2">
-                  <i class="fa-solid fa-wand-magic-sparkles"></i> AI History
+                  <i class="fa-solid fa-wand-magic-sparkles"></i> Auto Description
                 </button>
               </div>
             </form>
@@ -436,7 +423,7 @@
     </div>
 
     <script>
-      const ADMIN_PASSWORD = 'cricket123';
+      const ADMIN_PASSWORD = '21032009';
       let isAdminUnlocked = false;
       let currentCategory = 'All';
 
@@ -490,15 +477,6 @@
         }));
       }
 
-      function escapeHtml(value) {
-        return String(value ?? '')
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;');
-      }
-
       function loadProducts() {
         try {
           const stored = JSON.parse(localStorage.getItem('cricket_bazaar_products'));
@@ -540,7 +518,7 @@
             if (pass === ADMIN_PASSWORD) {
               isAdminUnlocked = true;
             } else {
-              alert('Access denied. This is a demo-only admin gate.');
+              alert('Access denied. Incorrect password.');
               return;
             }
           }
@@ -931,41 +909,15 @@
           return;
         }
 
-        alert('Demo checkout successful. This is a front-end prototype only. A production-ready site would require real payment integration and secure backend order handling.');
+        alert('Demo checkout successful. This is a front-end prototype only.');
         cart = [];
         updateCartCount();
         closeCart();
       }
 
+      // Initialize App
       loadProducts();
       renderStorefront();
-      document.getElementById('product-form').addEventListener('submit', function(event) {
-  event.preventDefault();
-  const id = document.getElementById('edit-id').value;
-  const productData = {
-    name: document.getElementById('p-name').value.trim(),
-    category: document.getElementById('p-category').value,
-    price: Number(document.getElementById('p-price').value),
-    image: document.getElementById('p-image').value.trim(),
-    desc: document.getElementById('p-desc').value.trim()
-  };
-  if (!productData.name || !productData.price) {
-    alert('Please complete all required fields.');
-    return;
-  }
-  if (id) {
-    const index = products.findIndex(item => item.id === id);
-    if (index !== -1) products[index] = { ...products[index], ...productData };
-  } else {
-    products.push({ id: generateId(), ...productData });
-  }
-  saveProducts();
-  document.getElementById('product-form').reset();
-  document.getElementById('edit-id').value = '';
-  renderAdminInventory();
-  renderStorefront();
-});
-
     </script>
   </body>
 </html>
